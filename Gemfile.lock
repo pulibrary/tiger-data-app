@@ -151,6 +151,7 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    graphql (2.0.17)
     hashie (5.0.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
@@ -395,6 +396,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   ffaker
+  graphql
   importmap-rails
   jbuilder
   omniauth-cas
