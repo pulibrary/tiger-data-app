@@ -3,10 +3,12 @@ class WelcomeController < ApplicationController
   skip_before_action :authenticate_user!
   def index
     return if current_user.nil?
-    @mf_version = media_flux.version
-    @demo_namespace = params[:namespace].nil? ? "/tigerdata/td-demo-001" : params[:namespace]
-    start = params[:start].nil? ? 1 : params[:start].to_i
-    @result = query_assets(@demo_namespace, start)
+    unless Rails.env.development?
+      @mf_version = media_flux.version
+      @demo_namespace = params[:namespace].nil? ? "/tigerdata/td-demo-001" : params[:namespace]
+      start = params[:start].nil? ? 1 : params[:start].to_i
+      @result = query_assets(@demo_namespace, start)
+    end
   end
 
   def media_flux

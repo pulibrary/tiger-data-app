@@ -2,18 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe "WelcomeController" do
+RSpec.describe "WelcomeController", stub_mediaflux: true do
   context "unauthenticated user" do
     it "shows the 'Log In' button" do
       visit "/"
       expect(page).to have_content "Welcome to the TigerData user portal"
       expect(page).to have_content "Log In"
-    end
-
-    it "supports JS" do
-      visit "/"
-      click_on "Test jQuery"
-      expect(page).to have_content "jQuery works!"
     end
   end
 

@@ -21,40 +21,46 @@
 
 <%= image_tag("logo-300-200.png", alt: "TigerData logo", size: "300x200") %>
 
-<% if current_user %>
-  <p>Connected to MediaFlux <b><%= @mf_version[:version] %></b> at <b><%= Rails.configuration.mediaflux["api_host"] %></b>
-  <p>Assets under <b><%= @demo_namespace %></b></p>
-  <table>
+<% if Rails.env.development? %>
+  <p>
+    Disconnected from the Mediaflux server API. Please access <%= link_to("https://tigerdata-staging.princeton.edu") %> for an active demonstration.
+  </p>
+<% else %>
+  <% if current_user %>
+    <p>Connected to MediaFlux <b><%= @mf_version[:version] %></b> at <b><%= Rails.configuration.mediaflux["api_host"] %></b></p>
+    <p>Assets under <b><%= @demo_namespace %></b></p>
+    <table>
       <tr>
         <th>Path</th>
         <th>Type</th>
         <th>Size</th>
         <th>Created by</th>
       </tr>
-    <% @result[:assets].each do |asset| %>
-      <tr>
-        <td><%= asset[:path] %></td>
-        <td><%= asset[:type] %></td>
-        <td><%= asset[:size_human] %></td>
-        <td><%= asset[:creator] %></td>
-      </tr>
-    <% end %>
-  </table>
+      <% @result[:assets].each do |asset| %>
+        <tr>
+          <td><%= asset[:path] %></td>
+          <td><%= asset[:type] %></td>
+          <td><%= asset[:size_human] %></td>
+          <td><%= asset[:creator] %></td>
+        </tr>
+      <% end %>
+    </table>
 
-  <p>Displaying assets <%= @result[:result][:cursor][:from] %> to <%= @result[:result][:cursor][:to] %></p>
+    <p>Displaying assets <%= @result[:result][:cursor][:from] %> to <%= @result[:result][:cursor][:to] %></p>
 
-  <!-- prev/next -->
-  <p>
-    <% if @result[:result][:cursor][:prev] > 0 %>
-      <%= link_to("Previous page", root_path + "?start=#{@result[:result][:cursor][:prev]}&namespace=#{@demo_namespace}" )%>
-    <% else %>
-      [Previous page]
-    <% end %>
-    |
-    <% if @result[:result][:cursor][:next] > 0 %>
-      <%= link_to("Next page", root_path + "?start=#{@result[:result][:cursor][:next]}&namespace=#{@demo_namespace}" )%>
-    <% else %>
-      [Next page]
-    <% end %>
-  </p>
+    <!-- prev/next -->
+    <p>
+      <% if @result[:result][:cursor][:prev] > 0 %>
+        <%= link_to("Previous page", root_path + "?start=#{@result[:result][:cursor][:prev]}&namespace=#{@demo_namespace}" )%>
+      <% else %>
+        [Previous page]
+      <% end %>
+      |
+      <% if @result[:result][:cursor][:next] > 0 %>
+        <%= link_to("Next page", root_path + "?start=#{@result[:result][:cursor][:next]}&namespace=#{@demo_namespace}" )%>
+      <% else %>
+        [Next page]
+      <% end %>
+    </p>
+  <% end %>
 <% end %>

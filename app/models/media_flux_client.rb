@@ -43,14 +43,14 @@ class MediaFluxClient
   end
 
   # Queries for assets on the given namespace
-  def query(aql_where, idx: 1)
+  def query(aql_where, idx: 1, size: 10)
     xml_request = <<-XML_BODY
       <request>
         <service name="asset.query" session="#{@session_id}">
           <args>
             <where>#{aql_where}</where>
             <idx>#{idx}</idx>
-            <size>#{10}</size>
+            <size>#{size}</size>
           </args>
         </service>
       </request>
@@ -273,6 +273,10 @@ class MediaFluxClient
       XML_BODY
       response_body = http_post(xml_request)
       xml = Nokogiri::XML(response_body)
-      @session_id = xml.xpath("//response/reply/result/session").first.text
+
+      session_element = xml.xpath("//response/reply/result/session").first
+      if session_element
+        @session_id = session_element.text
+      end
     end
 end
