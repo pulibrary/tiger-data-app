@@ -31,6 +31,25 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_08_162546) do
     t.index ["project_id"], name: "index_project_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
+  create_table "user_jobs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "job_id"
+    t.string "project_title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_jobs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -60,4 +79,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_08_162546) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "user_jobs", "users"
 end
