@@ -83,7 +83,16 @@ class ProjectsController < ApplicationController
 
   def confirmation; end
 
-  def contents; end 
+  def contents; end
+
+  def list_contents
+    ListProjectContentsJob.perform_later
+
+    json_response = {
+      message: "You have a background job running."
+    }
+    render json: json_response
+  end
 
   private
 

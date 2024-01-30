@@ -278,4 +278,28 @@ RSpec.describe "Project Page", type: :system, stub_mediaflux: true do
       expect(page).to have_content("(#{::Project::PENDING_STATUS})")
     end
   end
+
+  context "Requesting all files for a given project" do
+    before do
+      project_not_in_mediaflux
+    end
+
+    context "when authenticated" do
+      before do
+        sign_in sponsor_user
+        allow(ListProjectContentsJob).to receive(:perform_later)
+      end
+
+      it "enqueues a Sidekiq job for asynchronously requesting project files" do
+        visit project_contents_path(project_not_in_mediaflux)
+        expect(page).to have_content("List All Files")
+        click_on "List All Files"
+        expect(page).to have_content("This will generate a list of 1,234,567 files and their attributes in a downloadable CSV. Do you wish to continue?")
+        expect(page).to have_content("Yes")
+        click_on "Yes"
+        expect(page).to have_content("You have a background job running.")
+        expect(ListProjectContentsJob).to have_received(:perform_later)
+      end
+    end
+  end
 end

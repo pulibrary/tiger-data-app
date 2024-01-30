@@ -1,4 +1,72 @@
 <h1> Project Contents </h1>
-<div> 
-<%= link_to "Return to Dashboard", root_path, class: "btn btn-primary btn-sm" %>
+<h2> Contents Summary </h2>
+<section class="container-fluid px-1 m-1 project-contents__summary">
+</section>
+<h2>Contents Preview</h2>
+<section class="container-fluid px-1 mx-2 my-4 project-contents__preview">
+  <div class="project-contents-viewer">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Path</th>
+          <th scope="col">Size</th>
+          <th scope="col">Last Modified</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">/</th>
+          <td>56 B</td>
+          <td>2023-09-20T09:05:36-04:00</td>
+        </tr>
+        <tr>
+          <th scope="row">0001.dat</th>
+          <td>56 B</td>
+          <td>2023-09-20T09:05:36-04:00</td>
+        </tr>
+        <tr>
+          <th scope="row">0002.dat</th>
+          <td>56 B</td>
+          <td>2023-09-20T09:05:36-04:00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <form name="project-contents-preview">
+    <button type="button" class="btn btn-primary">Show More</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#list-contents-modal">List All Files</button>
+    <button type="button" class="btn btn-dark">Custom Query</button>
+  </form>
+</section>
+<section class="container-fluid px-1 mx-0 my-1 project-contents__navigate">
+  <nav>
+    <button type="button" class="btn btn-primary">Review Metadata</button>
+    <a href="<%= root_path %>" class="btn btn-secondary">Return to Dashboard</a>
+  </nav>
+</section>
+<section class="project-alerts my-4">
+  <div class="row">
+    <div class="col">
+      <div id="project-alert" class="alert alert-primary d-none my-1" role="alert" ></div>
+    </div>
+  </div>
+</section>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="list-contents-modal" tabindex="-1" aria-labelledby="list the project contents" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="list-contents-modal-title">List Project Contents</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        This will generate a list of 1,234,567 files and their attributes in a downloadable CSV. Do you wish to continue?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="request-list-contents" class="btn btn-success" data-list-contents-path="<%= project_list_contents_path %>" >Yes</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
 </div>
