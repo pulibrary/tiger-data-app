@@ -7,6 +7,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :rememberable, :omniauthable
 
+  has_many :user_jobs, dependent: :nullify
+
   PROJECT_SPONSOR = :project_sponsor
   MEDIAFLUX_ADMIN = :mediaflux_admin
   USER_REGISTRATION_LIST = Rails.root.join("data", "user_registration_list.csv")

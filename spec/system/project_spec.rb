@@ -285,9 +285,13 @@ RSpec.describe "Project Page", type: :system, stub_mediaflux: true do
     end
 
     context "when authenticated" do
+      let(:job_id) { "d3b8eeb4-9c58-4af1-aaaf-7476f2804a44" }
+      let(:job) { instance_double(ListProjectContentsJob) }
+
       before do
+        allow(ListProjectContentsJob).to receive(:perform_later).and_return(job)
+        allow(job).to receive(:job_id).and_return("foo")
         sign_in sponsor_user
-        allow(ListProjectContentsJob).to receive(:perform_later)
       end
 
       it "enqueues a Sidekiq job for asynchronously requesting project files" do
@@ -298,7 +302,9 @@ RSpec.describe "Project Page", type: :system, stub_mediaflux: true do
         expect(page).to have_content("Yes")
         click_on "Yes"
         expect(page).to have_content("You have a background job running.")
-        expect(ListProjectContentsJob).to have_received(:perform_later)
+        expect(sponsor_user.user_jobs).not_to be_empty
+        user_job = sponsor_user.user_jobs.first
+        expect(user_job.job_id).to eq(job.job_id)
       end
     end
   end
