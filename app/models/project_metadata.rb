@@ -118,7 +118,15 @@ class ProjectMetadata
         form_metadata.keys
       end
 
+      def required_attributes
+        [
+          :data_sponsor,
+          :project_id
+        ]
+      end
+
       def valid?
-        form_metadata.values.include?(nil)
+        values = form_metadata.select { |k,v| required_attributes.include?(k) && v.nil? }
+        values.empty?
       end
 end
