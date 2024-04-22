@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class ProjectMetadata
+  include ActiveModel::API
+
   class Validator < ActiveModel::Validator
     def validate(record)
       if record.required_values.include?(nil)
