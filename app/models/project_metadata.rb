@@ -114,15 +114,8 @@ class ProjectMetadata
         data.merge(timestamps)
       end
 
-      def attributes
-        form_metadata.keys
-      end
-
       def required_attributes
-        [
-          :data_sponsor,
-          :project_id
-        ]
+        schema.required_project_schema_fields.map(&:label)
       end
 
       def valid?
