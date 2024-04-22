@@ -126,6 +126,10 @@ class TigerdataSchema
   end
   # rubocop:enable Metrics/MethodLength
 
+  def required_project_schema_fields
+    project_schema_fields.select { |field| field["min-occurs"] > 0 }
+  end
+
   private
 
     def aterm_element(field:, line_terminator:)
