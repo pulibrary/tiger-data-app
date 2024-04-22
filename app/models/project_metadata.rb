@@ -119,7 +119,8 @@ class ProjectMetadata
       end
 
       def required_attributes
-        required_field_labels.map { |v| v.snake_case.to_sym }
+        tableized = required_field_labels.map(&:tableize)
+        tableized.map(&:to_sym)
       end
 
       def valid?
