@@ -114,8 +114,12 @@ class ProjectMetadata
         data.merge(timestamps)
       end
 
+      def required_field_labels
+        TigerdataSchema.required_project_schema_fields.map(&:label)
+      end
+
       def required_attributes
-        schema.required_project_schema_fields.map(&:label)
+        required_field_labels.map { |v| v.snake_case.to_sym }
       end
 
       def valid?
