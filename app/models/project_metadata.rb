@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 class ProjectMetadata
+  class Validator < ActiveModel::Validator
+    def validate(record)
+      if record.required_values.include?(nil)
+
+        record.required_attributes.each do |attr|
+          value = record.attributes[attr]
+          record.errors.add(attr, "Missing metadata value for #{attr}") if value.nil?
+        end
+      end
+    end
+  end
+
   attr_reader :project, :current_user, :params
   def initialize(current_user:, project:)
     @project = project
@@ -58,6 +70,10 @@ class ProjectMetadata
     project.metadata["project_id"]
   end
 
+  def required_values
+    form_metadata.select { |k,v| required_attributes.include?(k) }
+  end
+
     private
 
       def read_only_counter
@@ -114,6 +130,8 @@ class ProjectMetadata
         data.merge(timestamps)
       end
 
+      alias attributes form_metadata
+
       def required_field_labels
         TigerdataSchema.required_project_schema_fields.map(&:label)
       end
@@ -123,8 +141,7 @@ class ProjectMetadata
         tableized.map(&:to_sym)
       end
 
-      def valid?
-        values = form_metadata.select { |k,v| required_attributes.include?(k) && v.nil? }
-        values.empty?
+      def required_values
+        attributes.select { |k,v| required_attributes.include?(k) }
       end
 end
