@@ -113,4 +113,12 @@ class ProjectMetadata
         timestamps = project_timestamps
         data.merge(timestamps)
       end
+
+      def attributes
+        form_metadata.keys
+      end
+
+      def valid?
+        form_metadata.values.include?(nil)
+      end
 end
