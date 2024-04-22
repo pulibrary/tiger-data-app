@@ -15,8 +15,8 @@ class Project < ApplicationRecord
     (metadata_json || {}).with_indifferent_access
   end
 
-  def metadata_model(current_user:)
-    ProjectMetadata.new(current_user:, project: self)
+  def metadata_model
+    ProjectMetadata.new(project: self)
   end
 
   def metadata=(metadata)

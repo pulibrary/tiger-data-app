@@ -16,7 +16,7 @@ class ProjectMetadata
   validates_with Validator
 
   attr_reader :project, :current_user, :params
-  def initialize(current_user:, project:)
+  def initialize(project:, current_user: nil)
     @project = project
     @current_user = current_user
   end
