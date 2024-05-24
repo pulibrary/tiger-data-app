@@ -48,14 +48,14 @@ development:
   api_password: <%= ENV["MEDIAFLUX_PASSWORD"] || 'change_me' %>
   shared_files_location: <%= ENV["SHARED_FILES_MOUNT"] || './public/' %>
 test:
-  api_root_ns: '/td-test-001/tigerdataNS'
+  api_root_ns: <%= ENV["MEDIAFLUX_ROOT_NS"] || '/td-demo-001/tigerdataNS' %>
   api_root_collection_name: 'tigerdata'
   api_root_collection_namespace: '/td-test-001'
-  api_root_collection: 'path=/td-test-001/tigerdata'
-  api_transport: 'http'
-  api_host: 'mediaflux.example.com'
-  api_port: '8888'
-  api_domain: 'system'
-  api_user: 'manager'
-  api_password: 'change_me'
-  shared_files_location: './public/'
+  api_root_collection: <%= ENV["MEDIAFLUX_ROOT_NS"] || 'path=/td-demo-001/tigerdata' %>
+  api_transport: <%= ENV["MEDIAFLUX_TRANSPORT"] || 'http' %>
+  api_host: <%= ENV['MEDIAFLUX_HOST'] || '0.0.0.0' %>
+  api_port: <%= ENV["MEDIAFLUX_PORT"] || '8888' %>
+  api_domain: <%= ENV["MEDIAFLUX_DOMAIN"] || 'system' %>
+  api_user: <%= ENV["MEDIAFLUX_USER"] || 'manager' %>
+  api_password: <%= ENV["MEDIAFLUX_PASSWORD"] || 'change_me' %>
+  shared_files_location: <%= ENV["SHARED_FILES_MOUNT"] || './public/' %>
