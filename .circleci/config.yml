@@ -38,8 +38,7 @@ commands:
     steps:
       - run: docker create --name postgres --publish 0.0.0.0:5432:5432 --env POSTGRES_HOST_AUTH_METHOD=trust --env POSTGRES_DB=test_db --env POSTGRES_USER=tiger_data_user postgres:13.5-alpine
       - run: docker start postgres
-orbs:
-  browser-tools: circleci/browser-tools@1.4.6
+
 jobs:
   build: # name of your job
     working_directory: ~/tiger_data
