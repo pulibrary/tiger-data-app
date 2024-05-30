@@ -117,7 +117,7 @@ jobs:
           at: *root
       - install_dependencies
       # wait for postgres and mediaflux
-      - run_mediaflux
+      # - run_mediaflux
       # - run_postgres
       - run: sleep 10
       - run: bundle exec rake db:migrate RAILS_ENV=test
