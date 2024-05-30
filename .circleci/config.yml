@@ -112,6 +112,7 @@ jobs:
     docker:
       - *ruby_docker
       - *postgres
+      - *mediaflux
     steps:
       - attach_workspace:
           at: *root
