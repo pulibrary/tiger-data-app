@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# typed: ignore
+
 require "coveralls"
 Coveralls.wear!("rails")
 require "simplecov"

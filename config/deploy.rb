@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: ignore
 
 set :application, "tigerdata"
 set :repo_url, "https://github.com/pulibrary/tiger-data-app.git"

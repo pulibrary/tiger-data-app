@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+# typed: ignore
+
 require "rails_helper"
 
 RSpec.describe Role, type: :model do

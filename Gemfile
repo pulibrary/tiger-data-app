@@ -115,3 +115,7 @@ group :test do
   gem "webmock"
   gem "yard"
 end
+
+gem "sorbet", group: :development
+gem "sorbet-runtime"
+gem "tapioca", require: false, group: [:development, :test]

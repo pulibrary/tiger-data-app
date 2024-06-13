@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# typed: ignore
 class OrganizationsController < ApplicationController
   skip_before_action :authenticate_user!
   def index
