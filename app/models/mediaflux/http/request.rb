@@ -14,40 +14,14 @@ module Mediaflux
         "/__mflux_svc__"
       end
 
-      def self.protocol
-        if mediaflux_port == 443
-          "https"
-        else
-          "http"
-        end
-      end
-
       def self.uri
-        URI("#{protocol}://#{mediaflux_host}:#{mediaflux_port}/#{request_path}")
+        URI("#{Connection.transport}://#{Connection.host}:#{Connection.port}/#{request_path}")
       end
 
       # Constructs a new HTTP POST request for usage with the Mediaflux API
       # @return [Net::HTTP::Post]
       def self.build_post_request
         Net::HTTP::Post.new(request_path)
-      end
-
-      # The Rails configuration options specifying the Mediaflux server
-      # @return [Hash]
-      def self.mediaflux
-        Rails.configuration.mediaflux
-      end
-
-      # The host URL for the Mediaflux server
-      # @return [String]
-      def self.mediaflux_host
-        Rails.configuration.mediaflux["api_host"]
-      end
-
-      # The host port for the Mediaflux server
-      # @return [String]
-      def self.mediaflux_port
-        Rails.configuration.mediaflux["api_port"].to_i
       end
 
       # The default XML namespace which should be used for building the XML
@@ -146,7 +120,7 @@ module Mediaflux
       # Take a string like "2024-02-26T10:33:11-05:00" and convert this string to "22-FEB-2024 13:57:19"
       def self.format_date_for_mediaflux(iso8601_date)
         return if iso8601_date.nil?
-        Time.parse(iso8601_date).strftime("%e-%b-%Y %H:%M:%S").upcase
+        Time.format_date_for_mediaflux(iso8601_date)
       end
 
       private

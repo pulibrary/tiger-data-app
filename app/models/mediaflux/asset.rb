@@ -30,8 +30,8 @@ module Mediaflux
     #   path_short  -> "/projectg/folder1/file-abc.txt"
     def path_short
       return nil if path.nil?
-      if path.starts_with?(Rails.configuration.mediaflux["api_root_ns"])
-        path[Rails.configuration.mediaflux["api_root_ns"].length..-1]
+      if path.starts_with?(Mediaflux::Http::Connection.root_namespace)
+        path[Mediaflux::Http::Connection.root_namespace.length..-1]
       else
         path
       end
@@ -42,7 +42,7 @@ module Mediaflux
       return nil if @last_modified_mf.nil?
       # https://nandovieira.com/working-with-dates-on-ruby-on-rails
       # Mediaflux dates are in UTC and look like this "07-Feb-2024 21:48:01"
-      Time.zone.parse(@last_modified_mf).in_time_zone("America/New_York").iso8601
+      Object::Time.zone.parse(@last_modified_mf).in_time_zone("America/New_York").iso8601
     end
 
     # Returns the path for the asset
